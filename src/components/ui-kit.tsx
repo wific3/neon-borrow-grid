@@ -24,7 +24,7 @@ const badge: Record<string, string> = {
 };
 export function StatusBadge({ status }: { status: AssetStatus | string }) {
   return (
-    <span className={`inline-block whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ${badge[status] ?? badge.Menunggu}`}>
+    <span className={`inline-block whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ${badge[status] ?? badge["Menunggu"]}`}>
       {status}
     </span>
   );
@@ -88,7 +88,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
         </Link>
         <nav className="mt-8 space-y-1">
           {nav.map((n) => (
-            <Link key={n.label} to={n.to} params={"params" in n ? n.params : undefined} className={linkCls} activeProps={active}>{n.label}</Link>
+            <Link key={n.label} to={n.to} {...("params" in n ? { params: n.params } : {})} className={linkCls} activeProps={active}>{n.label}</Link>
           ))}
         </nav>
         <div className="mt-auto rounded-lg bg-surface p-3 ring-1 ring-border">
@@ -104,7 +104,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           </div>
           <nav className="flex gap-1 overflow-x-auto px-3 pb-2">
             {nav.map((n) => (
-              <Link key={n.label} to={n.to} params={"params" in n ? n.params : undefined} className={linkCls} activeProps={active}>{n.label}</Link>
+              <Link key={n.label} to={n.to} {...("params" in n ? { params: n.params } : {})} className={linkCls} activeProps={active}>{n.label}</Link>
             ))}
           </nav>
         </div>

@@ -18,19 +18,21 @@ const now = () => new Date().toLocaleString("id-ID", { dateStyle: "short", timeS
 const ADMIN_WALLET = "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosg9pQ";
 const BORROWER_WALLET = "9aRbF3kPq2mZxW8yLtN5vC6hJ4dEuS1oGiY7nBQr2kLm";
 
+const AST1_HASH = "0xabc123f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3";
+const AST3_HASH = genHash();
 const initialAssets: Asset[] = [
-  { id: "AST-001", nama: "Proyektor Epson EB-X500", kondisi: "Baik", kategori: "Audio Visual", status: "Dipinjam", hash: "0xabc123f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3" },
+  { id: "AST-001", nama: "Proyektor Epson EB-X500", kondisi: "Baik", kategori: "Audio Visual", status: "Dipinjam", hash: AST1_HASH },
   { id: "AST-002", nama: "Laptop ThinkPad T480", kondisi: "Baik", kategori: "Komputer", status: "Tersedia" },
-  { id: "AST-003", nama: "Kamera Canon EOS R", kondisi: "Lecet ringan", kategori: "Dokumentasi", status: "Dikembalikan", hash: genHash() },
+  { id: "AST-003", nama: "Kamera Canon EOS R", kondisi: "Lecet ringan", kategori: "Dokumentasi", status: "Dikembalikan", hash: AST3_HASH },
   { id: "AST-004", nama: "Speaker Portabel JBL", kondisi: "Baik", kategori: "Audio Visual", status: "Tersedia" },
 ];
 const initialRequests: Request[] = [
-  { id: "REQ-101", assetId: "AST-001", peminjam: "Budi Mahasiswa (Dummy)", telepon: "0812-0000-1111", tanggal: "06/10/26", status: "Ditandatangani", hash: initialAssets[0].hash, wallet: BORROWER_WALLET, waktu: "06/10/26 09.12" },
+  { id: "REQ-101", assetId: "AST-001", peminjam: "Budi Mahasiswa (Dummy)", telepon: "0812-0000-1111", tanggal: "06/10/26", status: "Ditandatangani", hash: AST1_HASH, wallet: BORROWER_WALLET, waktu: "06/10/26 09.12" },
   { id: "REQ-102", assetId: "AST-002", peminjam: "Budi Mahasiswa (Dummy)", telepon: "0812-0000-1111", tanggal: "08/10/26", status: "Menunggu" },
 ];
 const initialLogs: Log[] = [
-  { id: "L3", waktu: "07/10/26 14.03", wallet: ADMIN_WALLET, hash: initialAssets[2].hash!, aksi: "Pengembalian aset", assetId: "AST-003", status: "Dikembalikan" },
-  { id: "L2", waktu: "06/10/26 09.12", wallet: BORROWER_WALLET, hash: initialAssets[0].hash!, aksi: "Tanda tangan perjanjian", assetId: "AST-001", status: "Dipinjam" },
+  { id: "L3", waktu: "07/10/26 14.03", wallet: ADMIN_WALLET, hash: AST3_HASH, aksi: "Pengembalian aset", assetId: "AST-003", status: "Dikembalikan" },
+  { id: "L2", waktu: "06/10/26 09.12", wallet: BORROWER_WALLET, hash: AST1_HASH, aksi: "Tanda tangan perjanjian", assetId: "AST-001", status: "Dipinjam" },
   { id: "L1", waktu: "05/10/26 10.15", wallet: ADMIN_WALLET, hash: genHash(), aksi: "Registrasi aset", assetId: "AST-001", status: "Tersedia" },
 ];
 
@@ -64,7 +66,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       log({ aksi: "Registrasi aset", assetId: id, status: "Tersedia" });
     },
     createRequest: (assetId, peminjam, telepon) => {
-      setRequests((p) => [...p, { id: `REQ-${100 + p.length + 1}`, assetId, peminjam, telepon, tanggal: now().split(" ")[0], status: "Menunggu" }]);
+      setRequests((p) => [...p, { id: `REQ-${100 + p.length + 1}`, assetId, peminjam, telepon, tanggal: now().split(" ")[0] ?? "", status: "Menunggu" }]);
       log({ aksi: "Permintaan peminjaman dibuat", assetId, status: "Menunggu" });
     },
     signRequest: (id) => {
