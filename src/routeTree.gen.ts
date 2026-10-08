@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuditorRouteImport } from './routes/auditor'
+import { Route as PeminjamRouteImport } from './routes/peminjam'
+import { Route as AsetIdRouteImport } from './routes/aset.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditorRoute = AuditorRouteImport.update({
+  id: '/auditor',
+  path: '/auditor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeminjamRoute = PeminjamRouteImport.update({
+  id: '/peminjam',
+  path: '/peminjam',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AsetIdRoute = AsetIdRouteImport.update({
+  id: '/aset/$id',
+  path: '/aset/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/auditor': typeof AuditorRoute
+  '/peminjam': typeof PeminjamRoute
+  '/aset/$id': typeof AsetIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/auditor': typeof AuditorRoute
+  '/peminjam': typeof PeminjamRoute
+  '/aset/$id': typeof AsetIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/auditor': typeof AuditorRoute
+  '/peminjam': typeof PeminjamRoute
+  '/aset/$id': typeof AsetIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/admin' | '/auditor' | '/peminjam' | '/aset/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/admin' | '/auditor' | '/peminjam' | '/aset/$id'
+  id: '__root__' | '/' | '/admin' | '/auditor' | '/peminjam' | '/aset/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  AuditorRoute: typeof AuditorRoute
+  PeminjamRoute: typeof PeminjamRoute
+  AsetIdRoute: typeof AsetIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auditor': {
+      id: '/auditor'
+      path: '/auditor'
+      fullPath: '/auditor'
+      preLoaderRoute: typeof AuditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/peminjam': {
+      id: '/peminjam'
+      path: '/peminjam'
+      fullPath: '/peminjam'
+      preLoaderRoute: typeof PeminjamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aset/$id': {
+      id: '/aset/$id'
+      path: '/aset/$id'
+      fullPath: '/aset/$id'
+      preLoaderRoute: typeof AsetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  AuditorRoute: AuditorRoute,
+  PeminjamRoute: PeminjamRoute,
+  AsetIdRoute: AsetIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
