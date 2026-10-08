@@ -12,8 +12,6 @@ export const randHex = (n: number) =>
   Array.from({ length: n }, () => Math.floor(Math.random() * 16).toString(16)).join("");
 export const genHash = () => "0x" + randHex(40);
 export const shortHash = (h?: string) => (h ? `${h.slice(0, 8)}...${h.slice(-4)}` : "—");
-const B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-const genWallet = () => Array.from({ length: 44 }, () => B58[Math.floor(Math.random() * 58)]).join("");
 export const shortWallet = (w?: string) => (w ? `${w.slice(0, 4)}...${w.slice(-3)}` : "—");
 const now = () => new Date().toLocaleString("id-ID", { dateStyle: "short", timeStyle: "short" });
 
@@ -57,7 +55,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   };
   const store: Store = {
     wallet,
-    connect: () => setWallet(genWallet().slice(0, 4) === "" ? ADMIN_WALLET : ADMIN_WALLET),
+    connect: () => setWallet(ADMIN_WALLET),
     disconnect: () => setWallet(null),
     assets, requests, logs,
     addAsset: (a) => {
